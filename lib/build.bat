@@ -6,7 +6,7 @@
 
 .\premake5.exe vs2015
 
-"%VS140COMNTOOLS%\devenv" /rebuild Debug32 %cd%/build/All.sln
+"%VS140COMNTOOLS%\devenv" /rebuild Release32 %cd%/build/All.sln
 
 @goto end
 

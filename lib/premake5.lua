@@ -28,13 +28,51 @@ workspace "ALL"
 
 project "aes128"
 	kind "SharedLib"
-	language "c"
+	language "c++"
+	targetdir "../bin/"
+	targetprefix ""
 	includedirs {
 		"./aes128/",
+		"./lua/",
 	}
 	files {
-		"./aes128/*.c",
+		"./aes128/*.*",
 	}
+
+	if os.is("windows") then
+		defines {
+			"LUA_BUILD_AS_DLL",
+			"LUA_LIB"
+		}
+		libdirs {"./lua/"}
+		links{"lua"}
+	else
+		linkoptions {"-fPIC --shared"}
+    end
+
+project "aoi"
+	kind "SharedLib"
+	language "c"
+	targetdir "../bin/"
+	targetprefix ""
+	includedirs {
+		"./lua/",
+	}
+	
+	files {
+		"./aoi/*.c",
+	}
+	if os.is("windows") then
+		defines {
+			"LUA_BUILD_AS_DLL",
+			"LUA_LIB"
+		}
+
+		libdirs {"./lua/"}
+		links{"lua"}
+	else
+		linkoptions {"-fPIC --shared"}
+    end
 
 if _ACTION == "clean" then
 	os.rmdir("build")
